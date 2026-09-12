@@ -13,7 +13,7 @@ Open `index.html` directly in a browser, or serve the folder with any static web
 3. Enter one of the five accepted secrets: `nyknyc`, `self custody`, `no compromise`, `don't trust, verify`, or `ownership`.
 4. Wait for the reveal. Press Escape after the sequence to restart.
 
-The responses are driven by the order of messages, so the experience remains easy to perform live even if capitalization changes slightly. The name field accepts English letters only. Non-Latin writing, offensive English or Finglish terms, obfuscated profanity, repeated characters, and obvious keyboard mash are rejected at the name step.
+The responses are driven by the order of messages, so the experience remains easy to perform live even if capitalization changes slightly. The name field accepts English letters only. Non-Latin writing, offensive English, obfuscated profanity, repeated characters, and obvious keyboard mash are rejected at the name step.
 
 After the name, the terminal asks `what's the secret ?`. The Ledger reveal runs only for one of the five accepted secrets. Other phrases receive no response and leave the prompt open for another attempt.
 
