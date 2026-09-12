@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="An interactive monochrome terminal sequence." />
+    <title>Knock Knock</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='black'/%3E%3Cpath d='M13 13h18v6H19v12h-6zm20 0h18v18h-6V19H33zM13 33h6v12h12v6H13zm32 0h6v18H33v-6h12z' fill='white'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="terminal" aria-label="Interactive terminal" aria-live="polite">
+      <section id="transcript" aria-label="Conversation"></section>
+      <form id="prompt" autocomplete="off">
+        <span class="prompt-mark" aria-hidden="true">&gt;</span>
+        <span class="input-shell">
+          <input id="command" aria-label="Type your message" autocomplete="off" autocapitalize="off" spellcheck="false" />
+          <span class="cursor" aria-hidden="true"></span>
+        </span>
+      </form>
+      <section id="reveal" aria-label="Ledger logo reveal">
+        <canvas id="logo-canvas"></canvas>
+      </section>
+      <p id="status" class="sr-only"></p>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
+
