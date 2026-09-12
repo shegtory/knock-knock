@@ -8,8 +8,16 @@ const ctx = canvas.getContext("2d");
 
 const exchanges = [
   "who is this?",
-  "what is your question ?",
+  "what's the secret ?",
 ];
+
+const validSecrets = new Set([
+  "nyknyc",
+  "self custody",
+  "no compromise",
+  "don't trust, verify",
+  "ownership"
+]);
 
 const blockedExactNames = new Set([
   "fuck", "fuk", "fck", "shit", "bitch", "asshole", "bastard",
@@ -72,6 +80,15 @@ function isAcceptableName(value) {
   return shapeIsValid && hasEnoughSignal && !looksRandom && !isBlocked;
 }
 
+function normalizeSecret(value) {
+  return value
+    .toLowerCase()
+    .replace(/[’`]/g, "'")
+    .replace(/\s*,\s*/g, ", ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
   if (locked || !command.value.trim()) return;
@@ -97,6 +114,14 @@ async function handleSubmit(event) {
     await delay(430 + Math.random() * 320);
     await typeSystem(exchanges[stage]);
     stage += 1;
+    locked = false;
+    prompt.classList.remove("busy");
+    command.focus();
+    return;
+  }
+
+  if (!validSecrets.has(normalizeSecret(value))) {
+    await delay(900);
     locked = false;
     prompt.classList.remove("busy");
     command.focus();
