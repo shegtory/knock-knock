@@ -11,6 +11,14 @@ const exchanges = [
   "what is your question ?",
 ];
 
+const blockedNameFragments = [
+  "fuck", "fuk", "fck", "shit", "bitch", "asshole", "bastard",
+  "cunt", "pussy", "dick", "cock", "motherfucker", "idiot",
+  "kos", "kir", "kiri", "kuni", "jende", "jendeh", "goh",
+  "haromzade", "haramzade", "binamoos", "binamus", "madarjende",
+  "kharkosde", "kharkose", "koskesh", "kirik", "koon", "kun"
+];
+
 let stage = 0;
 let locked = false;
 
@@ -37,16 +45,48 @@ async function typeSystem(text) {
   }
 }
 
+function normalizedName(value) {
+  return value
+    .toLowerCase()
+    .replace(/[@4]/g, "a")
+    .replace(/[3]/g, "e")
+    .replace(/[1!|]/g, "i")
+    .replace(/[0]/g, "o")
+    .replace(/[5$]/g, "s")
+    .replace(/[7]/g, "t")
+    .replace(/[^a-z]/g, "");
+}
+
+function isAcceptableName(value) {
+  const clean = value.trim();
+  const compact = normalizedName(clean);
+  const shapeIsValid = /^[a-z][a-z '\-]{1,31}$/i.test(clean);
+  const looksRandom = /(.)\1{2,}|qwerty|asdf|zxcv|testtest|abcdef/i.test(compact);
+  const hasEnoughSignal = compact.length >= 2 && new Set(compact).size >= 2 && /[aeiouy]/.test(compact);
+  const isBlocked = blockedNameFragments.some((word) => compact.includes(word));
+  return shapeIsValid && hasEnoughSignal && !looksRandom && !isBlocked;
+}
+
 async function handleSubmit(event) {
   event.preventDefault();
   if (locked || !command.value.trim()) return;
 
   const value = command.value.trim();
-  appendLine(value, "user");
   command.value = "";
   resizeInput();
   locked = true;
   prompt.classList.add("busy");
+
+  if (stage === 1 && !isAcceptableName(value)) {
+    await delay(300);
+    await typeSystem("use a real name.");
+    locked = false;
+    prompt.classList.remove("busy");
+    command.focus();
+    return;
+  }
+
+  appendLine(value, "user");
 
   if (stage < exchanges.length) {
     await delay(430 + Math.random() * 320);
