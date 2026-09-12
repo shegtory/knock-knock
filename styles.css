@@ -1,0 +1,131 @@
+:root {
+  color-scheme: dark;
+  font-family: "Courier New", Courier, monospace;
+  background: #000;
+  color: #f4f4f4;
+}
+
+* { box-sizing: border-box; }
+
+html, body { min-height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  background: #000;
+}
+
+#terminal {
+  width: min(92vw, 960px);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: clamp(2rem, 9vh, 7rem) 0 4rem;
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  line-height: 1.65;
+  letter-spacing: 0.025em;
+}
+
+#transcript { white-space: pre-wrap; }
+
+.line {
+  min-height: 1.65em;
+  opacity: 0;
+  animation: appear 90ms linear forwards;
+}
+
+.line.user::before {
+  content: "> ";
+  color: #777;
+}
+
+.line.system { color: #cfcfcf; }
+
+#prompt {
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  min-height: 1.65em;
+}
+
+.prompt-mark {
+  flex: 0 0 auto;
+  margin-right: 0.65ch;
+  color: #777;
+}
+
+.input-shell {
+  display: inline-flex;
+  align-items: baseline;
+  min-width: 1ch;
+}
+
+#command {
+  width: 1ch;
+  min-width: 1ch;
+  max-width: calc(92vw - 3ch);
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #f4f4f4;
+  caret-color: transparent;
+  font: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.7ch;
+  height: 1.12em;
+  margin-left: 0.12ch;
+  background: #ededed;
+  transform: translateY(0.17em);
+  animation: blink 980ms steps(1, end) infinite;
+}
+
+#prompt.busy { visibility: hidden; }
+
+#reveal {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin-top: clamp(2.5rem, 9vh, 6rem);
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+#reveal.active { opacity: 1; }
+
+#logo-canvas {
+  display: block;
+  width: min(100%, 790px);
+  height: auto;
+  image-rendering: auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes blink { 0%, 48% { opacity: 1; } 49%, 100% { opacity: 0; } }
+@keyframes appear { to { opacity: 1; } }
+
+@media (max-width: 560px) {
+  #terminal { width: 88vw; padding-top: 3rem; }
+  #reveal { margin-top: 2.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation-duration: 1.8s; }
+}
+
