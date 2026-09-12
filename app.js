@@ -11,12 +11,16 @@ const exchanges = [
   "what is your question ?",
 ];
 
-const blockedNameFragments = [
+const blockedExactNames = new Set([
   "fuck", "fuk", "fck", "shit", "bitch", "asshole", "bastard",
   "cunt", "pussy", "dick", "cock", "motherfucker", "idiot",
   "kos", "kir", "kiri", "kuni", "jende", "jendeh", "goh",
-  "haromzade", "haramzade", "binamoos", "binamus", "madarjende",
-  "kharkosde", "kharkose", "koskesh", "kirik", "koon", "kun"
+  "kiram", "kiret", "kosam", "koset", "binamoos", "binamus"
+]);
+
+const blockedNameFragments = [
+  "motherfuck", "asshole", "haromzade", "haramzade", "madarjende",
+  "kharkosde", "kharkose", "koskesh", "jendeh", "fuck", "shit"
 ];
 
 let stage = 0;
@@ -61,9 +65,10 @@ function isAcceptableName(value) {
   const clean = value.trim();
   const compact = normalizedName(clean);
   const shapeIsValid = /^[a-z][a-z '\-]{1,31}$/i.test(clean);
-  const looksRandom = /(.)\1{2,}|qwerty|asdf|zxcv|testtest|abcdef/i.test(compact);
+  const looksRandom = /(.)\1{2,}|qwerty|asdf|zxcv|testtest|abcdef|poiuy|lkjh|mnbv/i.test(compact);
   const hasEnoughSignal = compact.length >= 2 && new Set(compact).size >= 2 && /[aeiouy]/.test(compact);
-  const isBlocked = blockedNameFragments.some((word) => compact.includes(word));
+  const isBlocked = blockedExactNames.has(compact)
+    || blockedNameFragments.some((word) => compact.includes(word));
   return shapeIsValid && hasEnoughSignal && !looksRandom && !isBlocked;
 }
 
