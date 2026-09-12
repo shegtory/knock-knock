@@ -9,9 +9,9 @@ Open `index.html` directly in a browser, or serve the folder with any static web
 ## Interaction
 
 1. Type `knock knock` and press Enter.
-2. Type `SHEGTORY` and press Enter.
+2. Type any real name in English or Finglish and press Enter.
 3. Type `where can I find safety and security?` and press Enter.
 4. Wait for the reveal. Press Escape after the sequence to restart.
 
-The responses are driven by the order of messages, so the experience remains easy to perform live even if capitalization or phrasing changes slightly.
+The responses are driven by the order of messages, so the experience remains easy to perform live even if capitalization or phrasing changes slightly. Offensive English and Finglish terms, obfuscated profanity, repeated characters, and obvious keyboard mash are rejected at the name step.
 
